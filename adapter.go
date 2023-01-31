@@ -23,18 +23,11 @@ import (
 
 	"entgo.io/ent/dialect"
 	entsql "entgo.io/ent/dialect/sql"
-	"github.com/casbin/casbin/v2/persist"
-	"github.com/casbin/ent-adapter/ent/casbinrule"
-	"github.com/casbin/ent-adapter/ent/predicate"
-
 	"github.com/casbin/casbin/v2/model"
-	"github.com/casbin/ent-adapter/ent"
-	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/jackc/pgx/v4/stdlib"
-	_ "github.com/lib/pq"
-
-	//_ "github.com/mattn/go-sqlite3"
-	"github.com/pkg/errors"
+	"github.com/casbin/casbin/v2/persist"
+	"github.com/woocoos/casbin-ent-adapter/ent"
+	"github.com/woocoos/casbin-ent-adapter/ent/casbinrule"
+	"github.com/woocoos/casbin-ent-adapter/ent/predicate"
 )
 
 const (
@@ -304,12 +297,12 @@ func (a *Adapter) WithTx(fn func(tx *ent.Tx) error) error {
 	}()
 	if err := fn(tx); err != nil {
 		if rerr := tx.Rollback(); rerr != nil {
-			err = errors.Wrapf(err, "rolling back transaction: %v", rerr)
+			err = fmt.Errorf("rolling back transaction: %w", rerr)
 		}
 		return err
 	}
 	if err := tx.Commit(); err != nil {
-		return errors.Wrapf(err, "committing transaction: %v", err)
+		return fmt.Errorf("committing transaction: %w", err)
 	}
 	return nil
 }

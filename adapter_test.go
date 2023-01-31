@@ -20,8 +20,11 @@ import (
 
 	"github.com/casbin/casbin/v2"
 	"github.com/casbin/casbin/v2/util"
-	"github.com/casbin/ent-adapter/ent"
 	"github.com/stretchr/testify/assert"
+	"github.com/woocoos/casbin-ent-adapter/ent"
+
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 func testGetPolicy(t *testing.T, e *casbin.Enforcer, res [][]string) {
