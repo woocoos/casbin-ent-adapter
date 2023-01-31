@@ -1,14 +1,14 @@
 Ent-Adapter
 ===
-[![Go Report Card](https://goreportcard.com/badge/github.com/casbin/gorm-adapter)](https://goreportcard.com/report/github.com/casbin/ent-adapter)
-[![Go](https://github.com/casbin/ent-adapter/actions/workflows/ci.yml/badge.svg)](https://github.com/casbin/ent-adapter/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/casbin/ent-adapter/badge.svg?branch=master)](https://coveralls.io/github/casbin/ent-adapter?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/woocoos/casbin-ent-adapter)](https://goreportcard.com/report/github.com/woocoos/casbin-ent-adapter)
+[![Go](https://github.com/woocoos/casbin-ent-adapter/actions/workflows/ci.yml/badge.svg)](https://github.com/woocoos/casbin-ent-adapter/actions/workflows/ci.yml)
+[![Coverage Status](https://coveralls.io/repos/github/woocoos/casbin-ent-adapter/badge.svg?branch=master)](https://coveralls.io/github/woocoos/casbin-ent-adapter?branch=master)
 
 Ent Adapter is the [ent](https://github.com/ent/ent) adapter for [Casbin](https://github.com/casbin/casbin). With this library, Casbin can load policy from PostgresSQL/Mysql or save policy to it.
 
 ## Installation
 
-    go get github.com/casbin/ent-adapter
+    go get github.com/woocoos/casbin-ent-adapter
 
 
 ## Usage
