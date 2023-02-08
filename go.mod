@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	entgo.io/ent v0.11.7
-	github.com/casbin/casbin/v2 v2.60.0
+	github.com/casbin/casbin/v2 v2.61.1
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/lib/pq v1.10.7
 	github.com/stretchr/testify v1.8.1
