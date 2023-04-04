@@ -30,16 +30,12 @@ import (
 	"github.com/woocoos/casbin-ent-adapter/ent/predicate"
 )
 
-const (
-	DefaultTableName = "casbin_rule"
-	DefaultDatabase  = "casbin"
-)
-
 type Adapter struct {
 	client *ent.Client
 	ctx    context.Context
 
-	filtered bool
+	filtered  bool
+	migration bool
 }
 
 type Filter struct {
@@ -53,6 +49,14 @@ type Filter struct {
 }
 
 type Option func(a *Adapter) error
+
+// WithMigration will create table automatically.
+func WithMigration() Option {
+	return func(a *Adapter) error {
+		a.migration = true
+		return nil
+	}
+}
 
 func open(driverName, dataSourceName string) (*ent.Client, error) {
 	db, err := sql.Open(driverName, dataSourceName)
@@ -74,19 +78,7 @@ func NewAdapter(driverName, dataSourceName string, options ...Option) (*Adapter,
 	if err != nil {
 		return nil, err
 	}
-	a := &Adapter{
-		client: client,
-		ctx:    context.Background(),
-	}
-	for _, option := range options {
-		if err := option(a); err != nil {
-			return nil, err
-		}
-	}
-	if err := client.Schema.Create(a.ctx); err != nil {
-		return nil, err
-	}
-	return a, nil
+	return NewAdapterWithClient(client, options...)
 }
 
 // NewAdapterWithClient create an adapter with client passed in.
@@ -101,8 +93,10 @@ func NewAdapterWithClient(client *ent.Client, options ...Option) (*Adapter, erro
 			return nil, err
 		}
 	}
-	if err := client.Schema.Create(a.ctx); err != nil {
-		return nil, err
+	if a.migration {
+		if err := client.Schema.Create(a.ctx); err != nil {
+			return nil, err
+		}
 	}
 	return a, nil
 }

@@ -229,13 +229,7 @@ func (crc *CasbinRuleCreate) sqlSave(ctx context.Context) (*CasbinRule, error) {
 func (crc *CasbinRuleCreate) createSpec() (*CasbinRule, *sqlgraph.CreateSpec) {
 	var (
 		_node = &CasbinRule{config: crc.config}
-		_spec = &sqlgraph.CreateSpec{
-			Table: casbinrule.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: casbinrule.FieldID,
-			},
-		}
+		_spec = sqlgraph.NewCreateSpec(casbinrule.Table, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	)
 	if value, ok := crc.mutation.Ptype(); ok {
 		_spec.SetField(casbinrule.FieldPtype, field.TypeString, value)

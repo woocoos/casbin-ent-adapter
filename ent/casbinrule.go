@@ -157,9 +157,3 @@ func (cr *CasbinRule) String() string {
 
 // CasbinRules is a parsable slice of CasbinRule.
 type CasbinRules []*CasbinRule
-
-func (cr CasbinRules) config(cfg config) {
-	for _i := range cr {
-		cr[_i].config = cfg
-	}
-}

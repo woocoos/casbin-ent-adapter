@@ -40,15 +40,7 @@ func (crd *CasbinRuleDelete) ExecX(ctx context.Context) int {
 }
 
 func (crd *CasbinRuleDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := &sqlgraph.DeleteSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table: casbinrule.Table,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: casbinrule.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewDeleteSpec(casbinrule.Table, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	if ps := crd.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

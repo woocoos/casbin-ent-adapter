@@ -8,11 +8,10 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/woocoos/casbin-ent-adapter/ent/casbinrule"
-	"github.com/woocoos/casbin-ent-adapter/ent/predicate"
-
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
+	"github.com/woocoos/casbin-ent-adapter/ent/casbinrule"
+	"github.com/woocoos/casbin-ent-adapter/ent/predicate"
 )
 
 const (

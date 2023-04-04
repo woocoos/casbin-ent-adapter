@@ -177,10 +177,12 @@ func (crq *CasbinRuleQuery) AllX(ctx context.Context) []*CasbinRule {
 }
 
 // IDs executes the query and returns a list of CasbinRule IDs.
-func (crq *CasbinRuleQuery) IDs(ctx context.Context) ([]int, error) {
-	var ids []int
+func (crq *CasbinRuleQuery) IDs(ctx context.Context) (ids []int, err error) {
+	if crq.ctx.Unique == nil && crq.path != nil {
+		crq.Unique(true)
+	}
 	ctx = setContextOp(ctx, crq.ctx, "IDs")
-	if err := crq.Select(casbinrule.FieldID).Scan(ctx, &ids); err != nil {
+	if err = crq.Select(casbinrule.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -362,20 +364,12 @@ func (crq *CasbinRuleQuery) sqlCount(ctx context.Context) (int, error) {
 }
 
 func (crq *CasbinRuleQuery) querySpec() *sqlgraph.QuerySpec {
-	_spec := &sqlgraph.QuerySpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   casbinrule.Table,
-			Columns: casbinrule.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: casbinrule.FieldID,
-			},
-		},
-		From:   crq.sql,
-		Unique: true,
-	}
+	_spec := sqlgraph.NewQuerySpec(casbinrule.Table, casbinrule.Columns, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
+	_spec.From = crq.sql
 	if unique := crq.ctx.Unique; unique != nil {
 		_spec.Unique = *unique
+	} else if crq.path != nil {
+		_spec.Unique = true
 	}
 	if fields := crq.ctx.Fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))

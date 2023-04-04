@@ -158,16 +158,7 @@ func (cru *CasbinRuleUpdate) ExecX(ctx context.Context) {
 }
 
 func (cru *CasbinRuleUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   casbinrule.Table,
-			Columns: casbinrule.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: casbinrule.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewUpdateSpec(casbinrule.Table, casbinrule.Columns, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	if ps := cru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
@@ -319,6 +310,12 @@ func (cruo *CasbinRuleUpdateOne) Mutation() *CasbinRuleMutation {
 	return cruo.mutation
 }
 
+// Where appends a list predicates to the CasbinRuleUpdate builder.
+func (cruo *CasbinRuleUpdateOne) Where(ps ...predicate.CasbinRule) *CasbinRuleUpdateOne {
+	cruo.mutation.Where(ps...)
+	return cruo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (cruo *CasbinRuleUpdateOne) Select(field string, fields ...string) *CasbinRuleUpdateOne {
@@ -354,16 +351,7 @@ func (cruo *CasbinRuleUpdateOne) ExecX(ctx context.Context) {
 }
 
 func (cruo *CasbinRuleUpdateOne) sqlSave(ctx context.Context) (_node *CasbinRule, err error) {
-	_spec := &sqlgraph.UpdateSpec{
-		Node: &sqlgraph.NodeSpec{
-			Table:   casbinrule.Table,
-			Columns: casbinrule.Columns,
-			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeInt,
-				Column: casbinrule.FieldID,
-			},
-		},
-	}
+	_spec := sqlgraph.NewUpdateSpec(casbinrule.Table, casbinrule.Columns, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	id, ok := cruo.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "CasbinRule.id" for update`)}
