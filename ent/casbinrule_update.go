@@ -132,7 +132,7 @@ func (cru *CasbinRuleUpdate) Mutation() *CasbinRuleMutation {
 
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (cru *CasbinRuleUpdate) Save(ctx context.Context) (int, error) {
-	return withHooks[int, CasbinRuleMutation](ctx, cru.sqlSave, cru.mutation, cru.hooks)
+	return withHooks(ctx, cru.sqlSave, cru.mutation, cru.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -157,7 +157,50 @@ func (cru *CasbinRuleUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (cru *CasbinRuleUpdate) check() error {
+	if v, ok := cru.mutation.Ptype(); ok {
+		if err := casbinrule.PtypeValidator(v); err != nil {
+			return &ValidationError{Name: "Ptype", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.Ptype": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V0(); ok {
+		if err := casbinrule.V0Validator(v); err != nil {
+			return &ValidationError{Name: "V0", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V0": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V1(); ok {
+		if err := casbinrule.V1Validator(v); err != nil {
+			return &ValidationError{Name: "V1", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V1": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V2(); ok {
+		if err := casbinrule.V2Validator(v); err != nil {
+			return &ValidationError{Name: "V2", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V2": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V3(); ok {
+		if err := casbinrule.V3Validator(v); err != nil {
+			return &ValidationError{Name: "V3", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V3": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V4(); ok {
+		if err := casbinrule.V4Validator(v); err != nil {
+			return &ValidationError{Name: "V4", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V4": %w`, err)}
+		}
+	}
+	if v, ok := cru.mutation.V5(); ok {
+		if err := casbinrule.V5Validator(v); err != nil {
+			return &ValidationError{Name: "V5", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V5": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (cru *CasbinRuleUpdate) sqlSave(ctx context.Context) (n int, err error) {
+	if err := cru.check(); err != nil {
+		return n, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(casbinrule.Table, casbinrule.Columns, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	if ps := cru.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
@@ -325,7 +368,7 @@ func (cruo *CasbinRuleUpdateOne) Select(field string, fields ...string) *CasbinR
 
 // Save executes the query and returns the updated CasbinRule entity.
 func (cruo *CasbinRuleUpdateOne) Save(ctx context.Context) (*CasbinRule, error) {
-	return withHooks[*CasbinRule, CasbinRuleMutation](ctx, cruo.sqlSave, cruo.mutation, cruo.hooks)
+	return withHooks(ctx, cruo.sqlSave, cruo.mutation, cruo.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
@@ -350,7 +393,50 @@ func (cruo *CasbinRuleUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// check runs all checks and user-defined validators on the builder.
+func (cruo *CasbinRuleUpdateOne) check() error {
+	if v, ok := cruo.mutation.Ptype(); ok {
+		if err := casbinrule.PtypeValidator(v); err != nil {
+			return &ValidationError{Name: "Ptype", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.Ptype": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V0(); ok {
+		if err := casbinrule.V0Validator(v); err != nil {
+			return &ValidationError{Name: "V0", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V0": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V1(); ok {
+		if err := casbinrule.V1Validator(v); err != nil {
+			return &ValidationError{Name: "V1", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V1": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V2(); ok {
+		if err := casbinrule.V2Validator(v); err != nil {
+			return &ValidationError{Name: "V2", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V2": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V3(); ok {
+		if err := casbinrule.V3Validator(v); err != nil {
+			return &ValidationError{Name: "V3", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V3": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V4(); ok {
+		if err := casbinrule.V4Validator(v); err != nil {
+			return &ValidationError{Name: "V4", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V4": %w`, err)}
+		}
+	}
+	if v, ok := cruo.mutation.V5(); ok {
+		if err := casbinrule.V5Validator(v); err != nil {
+			return &ValidationError{Name: "V5", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V5": %w`, err)}
+		}
+	}
+	return nil
+}
+
 func (cruo *CasbinRuleUpdateOne) sqlSave(ctx context.Context) (_node *CasbinRule, err error) {
+	if err := cruo.check(); err != nil {
+		return _node, err
+	}
 	_spec := sqlgraph.NewUpdateSpec(casbinrule.Table, casbinrule.Columns, sqlgraph.NewFieldSpec(casbinrule.FieldID, field.TypeInt))
 	id, ok := cruo.mutation.ID()
 	if !ok {

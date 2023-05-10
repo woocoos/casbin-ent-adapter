@@ -125,7 +125,7 @@ func (crc *CasbinRuleCreate) Mutation() *CasbinRuleMutation {
 // Save creates the CasbinRule in the database.
 func (crc *CasbinRuleCreate) Save(ctx context.Context) (*CasbinRule, error) {
 	crc.defaults()
-	return withHooks[*CasbinRule, CasbinRuleMutation](ctx, crc.sqlSave, crc.mutation, crc.hooks)
+	return withHooks(ctx, crc.sqlSave, crc.mutation, crc.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
@@ -187,23 +187,58 @@ func (crc *CasbinRuleCreate) check() error {
 	if _, ok := crc.mutation.Ptype(); !ok {
 		return &ValidationError{Name: "Ptype", err: errors.New(`ent: missing required field "CasbinRule.Ptype"`)}
 	}
+	if v, ok := crc.mutation.Ptype(); ok {
+		if err := casbinrule.PtypeValidator(v); err != nil {
+			return &ValidationError{Name: "Ptype", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.Ptype": %w`, err)}
+		}
+	}
 	if _, ok := crc.mutation.V0(); !ok {
 		return &ValidationError{Name: "V0", err: errors.New(`ent: missing required field "CasbinRule.V0"`)}
+	}
+	if v, ok := crc.mutation.V0(); ok {
+		if err := casbinrule.V0Validator(v); err != nil {
+			return &ValidationError{Name: "V0", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V0": %w`, err)}
+		}
 	}
 	if _, ok := crc.mutation.V1(); !ok {
 		return &ValidationError{Name: "V1", err: errors.New(`ent: missing required field "CasbinRule.V1"`)}
 	}
+	if v, ok := crc.mutation.V1(); ok {
+		if err := casbinrule.V1Validator(v); err != nil {
+			return &ValidationError{Name: "V1", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V1": %w`, err)}
+		}
+	}
 	if _, ok := crc.mutation.V2(); !ok {
 		return &ValidationError{Name: "V2", err: errors.New(`ent: missing required field "CasbinRule.V2"`)}
+	}
+	if v, ok := crc.mutation.V2(); ok {
+		if err := casbinrule.V2Validator(v); err != nil {
+			return &ValidationError{Name: "V2", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V2": %w`, err)}
+		}
 	}
 	if _, ok := crc.mutation.V3(); !ok {
 		return &ValidationError{Name: "V3", err: errors.New(`ent: missing required field "CasbinRule.V3"`)}
 	}
+	if v, ok := crc.mutation.V3(); ok {
+		if err := casbinrule.V3Validator(v); err != nil {
+			return &ValidationError{Name: "V3", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V3": %w`, err)}
+		}
+	}
 	if _, ok := crc.mutation.V4(); !ok {
 		return &ValidationError{Name: "V4", err: errors.New(`ent: missing required field "CasbinRule.V4"`)}
 	}
+	if v, ok := crc.mutation.V4(); ok {
+		if err := casbinrule.V4Validator(v); err != nil {
+			return &ValidationError{Name: "V4", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V4": %w`, err)}
+		}
+	}
 	if _, ok := crc.mutation.V5(); !ok {
 		return &ValidationError{Name: "V5", err: errors.New(`ent: missing required field "CasbinRule.V5"`)}
+	}
+	if v, ok := crc.mutation.V5(); ok {
+		if err := casbinrule.V5Validator(v); err != nil {
+			return &ValidationError{Name: "V5", err: fmt.Errorf(`ent: validator failed for field "CasbinRule.V5": %w`, err)}
+		}
 	}
 	return nil
 }
@@ -286,8 +321,8 @@ func (crcb *CasbinRuleCreateBulk) Save(ctx context.Context) ([]*CasbinRule, erro
 					return nil, err
 				}
 				builder.mutation = mutation
-				nodes[i], specs[i] = builder.createSpec()
 				var err error
+				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
 					_, err = mutators[i+1].Mutate(root, crcb.builders[i+1].mutation)
 				} else {

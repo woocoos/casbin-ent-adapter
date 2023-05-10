@@ -18,7 +18,7 @@ import (
 type CasbinRuleQuery struct {
 	config
 	ctx        *QueryContext
-	order      []OrderFunc
+	order      []casbinrule.OrderOption
 	inters     []Interceptor
 	predicates []predicate.CasbinRule
 	// intermediate query (i.e. traversal path).
@@ -52,7 +52,7 @@ func (crq *CasbinRuleQuery) Unique(unique bool) *CasbinRuleQuery {
 }
 
 // Order specifies how the records should be ordered.
-func (crq *CasbinRuleQuery) Order(o ...OrderFunc) *CasbinRuleQuery {
+func (crq *CasbinRuleQuery) Order(o ...casbinrule.OrderOption) *CasbinRuleQuery {
 	crq.order = append(crq.order, o...)
 	return crq
 }
@@ -246,7 +246,7 @@ func (crq *CasbinRuleQuery) Clone() *CasbinRuleQuery {
 	return &CasbinRuleQuery{
 		config:     crq.config,
 		ctx:        crq.ctx.Clone(),
-		order:      append([]OrderFunc{}, crq.order...),
+		order:      append([]casbinrule.OrderOption{}, crq.order...),
 		inters:     append([]Interceptor{}, crq.inters...),
 		predicates: append([]predicate.CasbinRule{}, crq.predicates...),
 		// clone intermediate query.

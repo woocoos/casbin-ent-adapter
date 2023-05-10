@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 
+	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"github.com/woocoos/casbin-ent-adapter/ent/casbinrule"
 )
@@ -28,7 +29,8 @@ type CasbinRule struct {
 	// V4 holds the value of the "V4" field.
 	V4 string `json:"V4,omitempty"`
 	// V5 holds the value of the "V5" field.
-	V5 string `json:"V5,omitempty"`
+	V5           string `json:"V5,omitempty"`
+	selectValues sql.SelectValues
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -41,7 +43,7 @@ func (*CasbinRule) scanValues(columns []string) ([]any, error) {
 		case casbinrule.FieldPtype, casbinrule.FieldV0, casbinrule.FieldV1, casbinrule.FieldV2, casbinrule.FieldV3, casbinrule.FieldV4, casbinrule.FieldV5:
 			values[i] = new(sql.NullString)
 		default:
-			return nil, fmt.Errorf("unexpected column %q for type CasbinRule", columns[i])
+			values[i] = new(sql.UnknownType)
 		}
 	}
 	return values, nil
@@ -103,9 +105,17 @@ func (cr *CasbinRule) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				cr.V5 = value.String
 			}
+		default:
+			cr.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
+}
+
+// Value returns the ent.Value that was dynamically selected and assigned to the CasbinRule.
+// This includes values selected through modifiers, order, etc.
+func (cr *CasbinRule) Value(name string) (ent.Value, error) {
+	return cr.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this CasbinRule.

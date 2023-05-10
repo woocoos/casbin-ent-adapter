@@ -27,7 +27,7 @@ func (crd *CasbinRuleDelete) Where(ps ...predicate.CasbinRule) *CasbinRuleDelete
 
 // Exec executes the deletion query and returns how many vertices were deleted.
 func (crd *CasbinRuleDelete) Exec(ctx context.Context) (int, error) {
-	return withHooks[int, CasbinRuleMutation](ctx, crd.sqlExec, crd.mutation, crd.hooks)
+	return withHooks(ctx, crd.sqlExec, crd.mutation, crd.hooks)
 }
 
 // ExecX is like Exec, but panics if an error occurs.

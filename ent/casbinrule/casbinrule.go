@@ -2,6 +2,10 @@
 
 package casbinrule
 
+import (
+	"entgo.io/ent/dialect/sql"
+)
+
 const (
 	// Label holds the string label denoting the casbinrule type in the database.
 	Label = "casbin_rule"
@@ -50,16 +54,73 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultPtype holds the default value on creation for the "Ptype" field.
 	DefaultPtype string
+	// PtypeValidator is a validator for the "Ptype" field. It is called by the builders before save.
+	PtypeValidator func(string) error
 	// DefaultV0 holds the default value on creation for the "V0" field.
 	DefaultV0 string
+	// V0Validator is a validator for the "V0" field. It is called by the builders before save.
+	V0Validator func(string) error
 	// DefaultV1 holds the default value on creation for the "V1" field.
 	DefaultV1 string
+	// V1Validator is a validator for the "V1" field. It is called by the builders before save.
+	V1Validator func(string) error
 	// DefaultV2 holds the default value on creation for the "V2" field.
 	DefaultV2 string
+	// V2Validator is a validator for the "V2" field. It is called by the builders before save.
+	V2Validator func(string) error
 	// DefaultV3 holds the default value on creation for the "V3" field.
 	DefaultV3 string
+	// V3Validator is a validator for the "V3" field. It is called by the builders before save.
+	V3Validator func(string) error
 	// DefaultV4 holds the default value on creation for the "V4" field.
 	DefaultV4 string
+	// V4Validator is a validator for the "V4" field. It is called by the builders before save.
+	V4Validator func(string) error
 	// DefaultV5 holds the default value on creation for the "V5" field.
 	DefaultV5 string
+	// V5Validator is a validator for the "V5" field. It is called by the builders before save.
+	V5Validator func(string) error
 )
+
+// OrderOption defines the ordering options for the CasbinRule queries.
+type OrderOption func(*sql.Selector)
+
+// ByID orders the results by the id field.
+func ByID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldID, opts...).ToFunc()
+}
+
+// ByPtype orders the results by the Ptype field.
+func ByPtype(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldPtype, opts...).ToFunc()
+}
+
+// ByV0 orders the results by the V0 field.
+func ByV0(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV0, opts...).ToFunc()
+}
+
+// ByV1 orders the results by the V1 field.
+func ByV1(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV1, opts...).ToFunc()
+}
+
+// ByV2 orders the results by the V2 field.
+func ByV2(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV2, opts...).ToFunc()
+}
+
+// ByV3 orders the results by the V3 field.
+func ByV3(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV3, opts...).ToFunc()
+}
+
+// ByV4 orders the results by the V4 field.
+func ByV4(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV4, opts...).ToFunc()
+}
+
+// ByV5 orders the results by the V5 field.
+func ByV5(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldV5, opts...).ToFunc()
+}
