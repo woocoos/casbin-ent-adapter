@@ -274,11 +274,11 @@ func testFilteredPolicy(t *testing.T, a *Adapter) {
 }
 
 func TestAdapters(t *testing.T) {
-	a := initAdapter(t, "mysql", "root:@tcp(127.0.0.1:3306)/casbin")
+	a := initAdapter(t, "mysql", "root:@tcp(127.0.0.1:3306)/casbin", WithMigration())
 	testAutoSave(t, a)
 	testSaveLoad(t, a)
 
-	a = initAdapter(t, "postgres", "user=postgres password=postgres host=127.0.0.1 port=5432 sslmode=disable dbname=casbin")
+	a = initAdapter(t, "postgres", "user=postgres password=postgres host=127.0.0.1 port=5432 sslmode=disable dbname=casbin", WithMigration())
 	testAutoSave(t, a)
 	testSaveLoad(t, a)
 
@@ -298,12 +298,12 @@ func TestAdapters(t *testing.T) {
 	testAutoSave(t, a)
 	testSaveLoad(t, a)
 
-	a = initAdapter(t, "mysql", "root:@tcp(127.0.0.1:3306)/casbin")
+	a = initAdapter(t, "mysql", "root:@tcp(127.0.0.1:3306)/casbin", WithMigration())
 	testUpdatePolicy(t, a)
 	testUpdatePolicies(t, a)
 	testUpdateFilteredPolicies(t, a)
 
-	a = initAdapter(t, "postgres", "user=postgres password=postgres host=127.0.0.1 port=5432 sslmode=disable dbname=casbin")
+	a = initAdapter(t, "postgres", "user=postgres password=postgres host=127.0.0.1 port=5432 sslmode=disable dbname=casbin", WithMigration())
 	testUpdatePolicy(t, a)
 	testUpdatePolicies(t, a)
 	testUpdateFilteredPolicies(t, a)
